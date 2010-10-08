@@ -5,7 +5,7 @@ module Tolk
 
     def index
       @locales = Tolk::Locale.secondary_locales
-      @primary_key_scopes = Tolk::Phrase.all.collect({|phrase| phrase.key.split('.').first}).uniq
+      @primary_key_scopes = Tolk::Phrase.all.collect{|phrase| phrase.key.split('.').first}.uniq
     end
   
     def show
