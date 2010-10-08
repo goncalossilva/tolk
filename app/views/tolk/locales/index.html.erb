@@ -14,7 +14,7 @@
         <ul class="primary-keys">
           <%- @primary_key_scopes.each do |key| -%>
           <li>
-            <%= link_to key, tolk_search_path(:k => key) %>
+            <%= link_to key, tolk_search_path(:locale => locale.name, :scope => 'origin', :k => key) %>
             <% missing_count = locale.count_phrases_without_translation(key) %>
             <% if missing_count > 0 %>
               <span class="missing_translations"><%= missing_count %></span>

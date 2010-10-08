@@ -143,6 +143,14 @@ ul.locales li {
    padding: 5px 10px;*/
 }
 
+ul.locales ul.primary-keys li {
+  width: 140px;
+  display: block;
+  float: left;
+  margin: 0 10px 3px 10px;
+  font-size: 10px;
+}
+
 ul.locales a {
   font-weight: bold;
   text-decoration: underline;
@@ -166,6 +174,10 @@ ul.locales span.missing_translations {
   line-height: 9px;
   vertical-align: top;
   display: inline-block;
+}
+
+ul.primary-keys span.missing_translations {
+  background: #ccc;
 }
 
 ul.locales span {
