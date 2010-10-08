@@ -9,8 +9,19 @@
         <%= link_to locale.language_name, locale %>
         <% missing_count = locale.count_phrases_without_translation %>
         <% if missing_count > 0 %>
-          <span class="missing_translations"><%= locale.count_phrases_without_translation %></span>
+          <span class="missing_translations"><%= missing_count %></span>
         <% end %>
+        <ul>
+          <%- @primary_key_scopes.each do |key| -%>
+          <li>
+            <%= link_to tolk_search_path(:k => key), key %>
+            <% missing_count = locale.count_phrases_without_translation(key) %>
+            <% if missing_count > 0 %>
+              <span class="missing_translations"><%= missing_count %></span>
+            <% end %>
+          </li>
+          <%- end -%>
+        </ul>
       </li>
     <% end %>
   </ul>
