@@ -34,7 +34,7 @@
 <div class="submit">
   <%= f.error_messages %>
   <p>
-    <%= raw f.label "Add a new Locale" %>
+    <%= f.label "Add a new Locale".html_safe %>
     <select id="select_tolk_locale_name" name="tolk_locale[name]">
       <%= options_for_select tolk_locale_selection %>
     </select>
