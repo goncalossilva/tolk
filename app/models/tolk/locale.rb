@@ -187,7 +187,7 @@ module Tolk
     end
 
     def language_name
-      MAPPING[self.name] || self.name
+      MAPPING[self.name] || self.description || self.name
     end
 
     def [](key)

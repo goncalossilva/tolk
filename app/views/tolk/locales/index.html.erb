@@ -19,17 +19,26 @@
   <p>No locales yet.</p>
 
 <% end %>
-<% form_for(Tolk::Locale.new) do |f| %>
 <div class="submit">
-  <%= f.error_messages %>
-  <p>
-    <%= f.label "Add a new Locale" %>
-    <select id="select_tolk_locale_name" name="tolk_locale[name]">
-      <%= options_for_select tolk_locale_selection %>
-    </select>
-    <%= f.submit 'Add' %>
-  </p>
+  <% form_for(Tolk::Locale.new) do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label "Add a new Locale" %>
+      <select id="select_tolk_locale_name" name="tolk_locale[name]">
+        <%= options_for_select tolk_locale_selection %>
+      </select>
+      <%= f.submit 'Add' %>
+    </p>
+  <% end %>
+  <p style="margin:10px 0px; font-size: 0.8em">or create your own</p>
+  <% form_for(Tolk::Locale.new) do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label "Locale name" %>
+      <%= f.text_field :name, :placeholder => "'pt-BR' or 'fr'" %>
+      <%= f.label "Description" %>
+      <%= f.text_field :description, :placeholder => "'Portuguese (Brazil)' or 'French'" %>
+      <%= f.submit 'Add' %>
+    </p>
+  <% end %>
 </div>
-<% end %>
-
-
