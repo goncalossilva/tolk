@@ -9,8 +9,19 @@
         <%= link_to locale.language_name, locale %>
         <% missing_count = locale.count_phrases_without_translation %>
         <% if missing_count > 0 %>
-          <span class="missing_translations"><%= locale.count_phrases_without_translation %></span>
+          <span class="missing_translations"><%= missing_count %></span>
         <% end %>
+        <ul class="primary-keys">
+          <%- @primary_key_scopes.each do |key| -%>
+          <li>
+            <%= link_to key, tolk_search_path(:locale => locale.name, :scope => 'origin', :k => key) %>
+            <% missing_count = locale.count_phrases_without_translation(key) %>
+            <% if missing_count > 0 %>
+              <span class="missing_translations"><%= missing_count %></span>
+            <% end %>
+          </li>
+          <%- end -%>
+        </ul>
       </li>
     <% end %>
   </ul>
@@ -23,7 +34,7 @@
   <% form_for(Tolk::Locale.new) do |f| %>
     <%= f.error_messages %>
     <p>
-      <%= f.label "Add a new Locale" %>
+      <%= f.label "Add a new Locale".html_safe %>
       <select id="select_tolk_locale_name" name="tolk_locale[name]">
         <%= options_for_select tolk_locale_selection %>
       </select>
