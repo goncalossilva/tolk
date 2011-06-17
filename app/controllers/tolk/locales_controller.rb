@@ -19,7 +19,8 @@ module Tolk
     end
 
     def update
-      @locale.translations_attributes = params[:translations]
+      @locale.translations_attributes = params[:translations] if params[:translations]
+      @locale.description = params[:description] if params[:description]
       @locale.save
       redirect_to request.referrer
     end

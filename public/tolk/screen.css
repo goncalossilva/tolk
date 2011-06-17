@@ -81,7 +81,11 @@ div#head span.home {
   margin-right: 1px;
 }
 
-div#head span.locale {
+div#head form#edit_locale_description {
+  display: inline;
+}
+
+div#head span#locale, div#head form#edit_locale_description {
   color: #fff;
   font-weight: bold;
   background: #444;
@@ -94,13 +98,13 @@ div#head span.locale {
   border-bottom-right-radius: 10px;
 }
 
-div#head span.locale.empty {
+div#head span#locale.empty {
   background: #333;
   padding-left: 0;
   margin-left: -6px;
 }
 
-div#head span.locale em {
+div#head span#locale em {
   font-style: normal;
   font-weight: normal;
 }
