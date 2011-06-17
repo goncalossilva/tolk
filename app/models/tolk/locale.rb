@@ -125,7 +125,7 @@ module Tolk
 
     def count_phrases_without_translation(key_query = nil)
       existing_ids = self.translations.all(:select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
-      phrases = key_query.nil? ? Tolk::Phrase : Tolk::Phrase.containing_text(key_query)
+      phrases = key_query.nil? ? Tolk::Phrase : Tolk::Phrase.starting_with_text(key_query)
       phrases.count - phrases.scoped(:conditions => ['tolk_phrases.id IN(?)', existing_ids]).count
     end
 
@@ -143,15 +143,16 @@ module Tolk
     def search_phrases(query, scope, key_query, page = nil, options = {})
       return [] unless query.present? || key_query.present?
 
-      translations = case scope
-      when :origin
-        Tolk::Locale.primary_locale.translations.containing_text(query)
-      else # :target
-        self.translations.containing_text(query)
-      end
+      translations = 
+        case scope
+        when :origin
+          Tolk::Locale.primary_locale.translations.containing_text(query)
+        else # :target
+          self.translations.containing_text(query)
+        end
 
       phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
-      phrases = phrases.containing_text(key_query)
+      phrases = phrases.starting_with_text(key_query)
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id IN(?)', translations.map(&:phrase_id).uniq])
       phrases.paginate({:page => page}.merge(options))
     end

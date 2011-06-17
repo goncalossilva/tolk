@@ -12,6 +12,9 @@
         <% if missing_count > 0 %>
           <span class="missing_translations"><%= missing_count %></span>
         <% end %>
+        <form style="display: inline">
+          <input type="checkbox" class="show_keys" />
+        </form>
         <ul class="primary-keys" style="display:hidden">
           <%- @primary_key_scopes.each do |key| -%>
           <li>
