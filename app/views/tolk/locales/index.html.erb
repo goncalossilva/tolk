@@ -7,15 +7,16 @@
     <% @locales.each do |locale| %>
       <li>
         <%= link_to locale.language_name, locale %>
-        <% missing_count = locale.count_phrases_without_translation %>
+        <% missing = locale.phrases_without_translation %>
+        <% missing_count = missing.size %>
         <% if missing_count > 0 %>
           <span class="missing_translations"><%= missing_count %></span>
         <% end %>
-        <ul class="primary-keys">
+        <ul class="primary-keys" style="display:hidden">
           <%- @primary_key_scopes.each do |key| -%>
           <li>
             <%= link_to key, tolk_search_path(:locale => locale.name, :scope => 'origin', :k => key) %>
-            <% missing_count = locale.count_phrases_without_translation(key) %>
+            <% missing_count = missing.count { |phrase| phrase.key =~ /^#{key}\./ } %>
             <% if missing_count > 0 %>
               <span class="missing_translations"><%= missing_count %></span>
             <% end %>
