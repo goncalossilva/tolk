@@ -8,7 +8,8 @@ acronym, abbr {
   font-weight: bold;
 }
 
-.center {text-align: center;}	
+.center {text-align: center;}
+.right {float:right;}
 .large {font-size: larger;}	
 .small {font-size: smaller;}
 strong {font-weight: bold;}
