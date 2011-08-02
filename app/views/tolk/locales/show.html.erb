@@ -17,6 +17,19 @@
   <link rel="alternate" type="application/rss+xml" title="RSS" href="<%= tolk_locale_path(@locale, :format => 'atom') -%>" />
 <% end %>
 
+<h3 class="switch">
+  You're translating from <%= @from_locale.language_name %>
+  <% if @from_locale.primary? -%>
+    <span>(which is the primary locale)</span>
+  <% else -%>
+    <span>(which is missing <%= @from_locale.count_phrases_without_translation %> translations from the primary language)</span>
+  <% end -%>
+</h3>
+
+<div class="search">
+  <%= render :partial => "tolk/locales/from_locale_form", :locals => { :locale => @locale, :from_locale => @from_locale } %>  
+</div>
+
 <h3 class="switch">Phrases missing translation (<%= @locale.count_phrases_without_translation %>) <span>(<%= link_to 'See completed translations', all_tolk_locale_path(@locale) %>)</span></h3>
 
 <% if @locale.has_updated_translations? && action_name != 'updated' %>
@@ -24,7 +37,7 @@
 <% end %>
 
 <div class="search">
-  <%= render :partial => "tolk/searches/form", :locals => { :locale => @locale } %>
+  <%= render :partial => "tolk/searches/form", :locals => { :locale => @locale, :from_locale => @from_locale } %>
 </div>
 
 <div class="translations">
@@ -33,7 +46,7 @@
       <table class="translations">
         <tr>
           <th class="translation"><%= @locale.language_name -%></th>
-          <th class="key"><%= Tolk::Locale.primary_language_name -%></th>
+          <th class="key"><%= @from_locale.language_name -%></th>
         </tr>
         <% @phrases.each do |phrase| %>
           <tr>
@@ -46,9 +59,9 @@
             </td>
             <td class="phrase">
               <% if params[:q].present? -%>
-                <%= highlight(format_i18n_value(phrase.translations.primary.text), params[:q]) -%>
+                <%= highlight(format_i18n_value(phrase.translations.from(@from_locale).try(:text)), params[:q]) -%>
               <% else -%>
-                <%= format_i18n_value(phrase.translations.primary.text) -%>
+                <%= format_i18n_value(phrase.translations.for(@from_locale).try(:text)) -%>
               <% end -%>
               <span class="key" title="<%= phrase.key %>"><%= truncate(phrase.key, :length => 100) %></span>
             </td>

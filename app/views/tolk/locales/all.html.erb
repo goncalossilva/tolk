@@ -1,6 +1,19 @@
 <% content_for :locale do %><span id="locale"><%= @locale.language_name %></span>
 <% end %>
 
+<h3 class="switch">
+  You're translating from <%= @from_locale.language_name %>
+  <% if @from_locale.primary? -%>
+    <span>(which is the primary locale)</span>
+  <% else -%>
+    <span>(which is missing <%= @from_locale.count_phrases_without_translation %> translations from the primary language)</span>
+  <% end -%>
+</h3>
+
+<div class="search">
+  <%= render :partial => "tolk/locales/from_locale_form", :locals => { :locale => @locale, :from_locale => @from_locale } %>  
+</div>
+
 <h3 class="switch">Completed translations <span>(<%= link_to 'See phrases missing translation', @locale %>)</span></h3>
 
 <% if @locale.has_updated_translations? && action_name != 'updated' %>
@@ -8,7 +21,7 @@
 <% end %>
 
 <div class="search">
-  <%= render :partial => "tolk/searches/form", :locals => { :locale => @locale } %>
+  <%= render :partial => "tolk/searches/form", :locals => { :locale => @locale, :from_locale => @from_locale } %>
 </div>
 
 <div class="translations">

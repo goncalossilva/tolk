@@ -1,0 +1,6 @@
+<% form_tag "", :method => :get do -%>
+  Translate from
+  <%= from_locale_selector_for(locale, from_locale) %>
+  <%= hidden_field_tag :page, params[:page] if params[:page] %>
+  <%= submit_tag "Switch", :name => nil %>
+<% end -%>

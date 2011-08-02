@@ -1,6 +1,7 @@
 module Tolk
   class LocalesController < Tolk::ApplicationController
     before_filter :find_locale, :only => [:show, :all, :update, :updated]
+    before_filter :find_from_locale, :only => [:show, :all]
     before_filter :ensure_no_primary_locale, :only => [:all, :update, :show, :updated]
 
     def index
@@ -12,7 +13,7 @@ module Tolk
       end
     end
   
-    def show
+    def show      
       respond_to do |format|
         format.html do
           @phrases = @locale.phrases_without_translation(params[:page])
@@ -47,6 +48,10 @@ module Tolk
 
     def find_locale
       @locale = Tolk::Locale.find_by_name!(params[:id])
+    end
+    
+    def find_from_locale
+      @from_locale = Tolk::Locale.find_by_name(params[:from_locale]) || Tolk::Locale.primary_locale
     end
   end
 end

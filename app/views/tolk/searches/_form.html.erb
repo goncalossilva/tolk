@@ -1,7 +1,8 @@
 <% form_tag "/tolk/search", :method => :get do %>
   <%= hidden_field_tag :locale, locale.name %>
+  <%= hidden_field_tag :from_locale, params[:from_locale] if params[:from_locale] %>
   Search for
-  <%= scope_selector_for(@locale) %>
+  <%= scope_selector_for(locale, from_locale) %>
   phrase:
   <%= text_field_tag :q, params[:q] %>
   within key:

@@ -25,9 +25,13 @@ module Tolk
       pairs.reject {|pair| existing_locale_names.include?(pair.last) }
     end
 
-    def scope_selector_for(locale)
-      select_tag 'scope', options_for_select([[Tolk::Locale.primary_locale.language_name, "origin"],
+    def scope_selector_for(locale, from_locale)
+      select_tag 'scope', options_for_select([[from_locale.language_name, "origin"],
                                               [locale.language_name, "target"]], params[:scope])
+    end
+    
+    def from_locale_selector_for(locale, from_locale)
+      select_tag 'from_locale', options_for_select(Tolk::Locale.all.map{|l| [l.language_name, l.name] if l.name != locale.name}.compact, from_locale.name)
     end
   end
 end
