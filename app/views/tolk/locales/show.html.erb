@@ -75,6 +75,9 @@
     <div class="paginate">
       <%= will_paginate @phrases, :renderer => Tolk::LinkRenderer %>
     </div>
+    <div class="per_page">
+      Show <%= select_tag :per_page, options_for_select([30, 100, 200, "all"], Tolk::Phrase.per_page) , :onchange => "if(this.value){window.location='?per_page='+this.value;}" %> results per page
+    </div>
   <% else %>
     <p style="text-align: left">There aren't any missing or updated phrases that need translation.</p>
     <p>&nbsp;</p>
