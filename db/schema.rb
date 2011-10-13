@@ -9,12 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100409194926) do
+ActiveRecord::Schema.define(:version => 20111013011620) do
 
   create_table "tolk_locales", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "description"
   end
 
   add_index "tolk_locales", ["name"], :name => "index_tolk_locales_on_name", :unique => true
@@ -24,8 +25,6 @@ ActiveRecord::Schema.define(:version => 20100409194926) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "tolk_phrases", ["key"], :name => "index_tolk_phrases_on_key", :unique => true
 
   create_table "tolk_translations", :force => true do |t|
     t.integer  "phrase_id"
