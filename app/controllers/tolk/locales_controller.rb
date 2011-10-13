@@ -10,7 +10,7 @@ module Tolk
       
       @primary_key_scopes = []
       if params[:details] == "true"
-        @primary_key_scopes = Tolk::Phrase.all(:order => 'tolk_phrases.key ASC').collect{|phrase| phrase.key.split('.').first}.uniq
+        @primary_key_scopes = Tolk::Phrase.all(:select => 'tolk_phrases.key', :order => 'tolk_phrases.key ASC').collect{|phrase| phrase.key.split('.').first}.uniq
       end
     end
   

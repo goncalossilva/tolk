@@ -3,13 +3,13 @@
 
 <h2>Locales 
   <span>Primary locale is <%= Tolk::Locale.primary_locale.language_name %></span>
-  <span class="right">
+  <!--<span class="right">
   <% if params[:details] == "true" %>
     <a href="?details=false">Hide details</a>
   <% else %>
     <a href="?details=true">Show details</a>
   <% end %>
-  </span>
+  </span>-->
 </h2>
 
 <% if @locales.any? %>
@@ -17,22 +17,24 @@
     <% @locales.each do |locale| %>
       <li>
         <%= link_to locale.language_name, locale %>
-        <% missing = locale.phrases_without_translation %>
+        <% missing = locale.all_phrases_without_translation %>
         <% missing_count = missing.size %>
         <% if missing_count > 0 %>
           <span class="missing_translations"><%= missing_count %></span>
-        <% end %>        
-        <ul class="primary-keys" style="display:hidden">
-          <%- @primary_key_scopes.each do |key| -%>
-          <li>
-            <%= link_to key, tolk_search_path(:locale => locale.name, :scope => 'origin', :k => key) %>
-            <% missing_count = missing.count { |phrase| phrase.key =~ /^#{key}\./ } %>
-            <% if missing_count > 0 %>
-              <span class="missing_translations"><%= missing_count %></span>
-            <% end %>
-          </li>
-          <%- end -%>
-        </ul>
+        <% end %>
+        <% if params[:details] == "true" %>
+          <ul class="primary-keys" style="display:hidden">
+            <%- @primary_key_scopes.each do |key| -%>
+            <li>
+              <%= link_to key, tolk_search_path(:locale => locale.name, :scope => 'origin', :k => key) %>
+              <% missing_count = missing.count { |phrase| /^#{key}\./ =~ phrase.key } %>
+              <% if missing_count > 0 %>
+                <span class="missing_translations"><%= missing_count %></span>
+              <% end %>
+            </li>
+            <%- end -%>
+          </ul>
+        <% end %>
       </li>
     <% end %>
   </ul>
