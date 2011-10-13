@@ -31,7 +31,7 @@ module Tolk
     end
     
     def from_locale_selector_for(locale, from_locale)
-      select_tag 'from_locale', options_for_select(Tolk::Locale.all.map{|l| [l.language_name, l.name] if l.name != locale.name}.compact, from_locale.name)
+      select_tag 'from_locale', options_for_select(Tolk::Locale.all.map{|l| [l.language_name, l.name] if l.name != locale.name}.compact, from_locale.name), :onchange => "if(this.value){window.location='?from_locale='+this.value;}"
     end
   end
 end
