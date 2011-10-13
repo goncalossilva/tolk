@@ -34,8 +34,8 @@ module Tolk
       'nl'    => 'Dutch',
       'no'    => 'Norwegian',
       'pl'    => 'Polish',
-      'pt-BR' => 'Portuguese (Brazilian)',
-      'pt-PT' => 'Portuguese (Portugal)',
+      'pt-br' => 'Portuguese (Brazilian)',
+      'pt-pt' => 'Portuguese (Portugal)',
       'ro'    => 'Romanian',
       'ru'    => 'Russian',
       'se'    => 'Swedish',
@@ -47,8 +47,8 @@ module Tolk
       'tr'    => 'Turkish',
       'uk'    => 'Ukrainian',
       'vi'    => 'Vietnamese',
-      'zh-CN' => 'Chinese (Simplified)',
-      'zh-TW' => 'Chinese (Traditional)'
+      'zh-cn' => 'Chinese (Simplified)',
+      'zh-tw' => 'Chinese (Traditional)'
     }
 
     has_many :phrases, :through => :translations, :class_name => 'Tolk::Phrase'
