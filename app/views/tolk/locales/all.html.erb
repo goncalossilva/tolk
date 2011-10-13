@@ -1,4 +1,9 @@
-<% content_for :locale do %><span id="locale"><%= @locale.language_name %></span>
+<% content_for :locale do %>
+  <span id="locale" title="Click to change name"><%= @locale.language_name %></span>
+  <% form_for @locale, :html => { :id => "edit_locale_description", :style => "display: none" } do |locale_form| %>
+    <%= text_field_tag :description, @locale.language_name  %>
+    <%= locale_form.submit "Save" %>
+  <% end %>
 <% end %>
 
 <h3 class="switch">
