@@ -1,7 +1,3 @@
-<div class="search">
-  <%= render :partial => "tolk/locales/from_locale_form", :locals => { :locale => @locale, :from_locale => @from_locale } %>  
-</div>
-
 <% content_for :locale do %>
   <span class="locale"><%= @locale.language_name %></span>
 <% end %>

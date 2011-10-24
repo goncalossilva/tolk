@@ -1,0 +1,15 @@
+<div style="float: right; margin-top: 25px;">
+  <%= link_to "Export", params.merge({:controller => "locales", :action => "export"}) %> /
+  <a href="#" id="import_csv_link">Import</a>
+  <% form_tag(url_for(params.merge({:controller => "locales", :action => "import"})), :id => "import_csv_form", :style => "display: none", :multipart => true) do %>
+    <%= file_field_tag :csv_file %>
+    <%= submit_tag %>
+  <% end %>
+  <script type="text/javascript">
+      document.getElementById("import_csv_link").onclick = function() {
+        document.getElementById("import_csv_link").style.display = "none";
+        document.getElementById("import_csv_form").style.display = "inline";
+      }
+  </script>
+</div>
+

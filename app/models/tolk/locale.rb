@@ -141,10 +141,14 @@ module Tolk
     end
 
     def all_phrases_without_translation
-      phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
-
       existing_ids = self.translations.all(:select => 'tolk_translations.phrase_id').map(&:phrase_id).uniq
-      phrases.scoped(:select => 'tolk:phrases.key', :conditions => ['tolk_phrases.id NOT IN (?)', existing_ids]) if existing_ids.present?
+
+      if existing_ids.present?
+        phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
+        phrases.scoped(:select => 'tolk:phrases.key', :conditions => ['tolk_phrases.id NOT IN (?)', existing_ids])
+      else
+        []
+      end
     end
 
     def search_phrases(query, scope, key_query, page = nil, options = {})

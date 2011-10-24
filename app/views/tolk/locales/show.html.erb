@@ -1,17 +1,6 @@
-<% content_for :locale do %>
-  <span id="locale" title="Click to change name"><%= @locale.language_name %></span>
-  <% form_for @locale, :html => { :id => "edit_locale_description", :style => "display: none" } do |locale_form| %>
-    <%= text_field_tag :description, @locale.language_name  %>
-    <%= locale_form.submit "Save" %>
-  <% end %>
-<% end %>
+<%= render :partial => "locale_name" %>
 
-<script type="text/javascript">
-    document.getElementById("locale").onclick = function() {
-      document.getElementById("locale").style.display = "none";
-      document.getElementById("edit_locale_description").style.display = "inline";
-    }
-</script>
+<%= render :partial => "import_export" %>
 
 <% content_for :head do %>
   <link rel="alternate" type="application/rss+xml" title="RSS" href="<%= tolk_locale_path(@locale, :format => 'atom') -%>" />

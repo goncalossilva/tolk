@@ -1,7 +1,9 @@
+require "csv"
+
 module Tolk
   class LocalesController < Tolk::ApplicationController
-    before_filter :find_locale, :only => [:show, :all, :update, :updated]
-    before_filter :find_from_locale, :only => [:show, :all]
+    before_filter :find_locale, :only => [:show, :all, :update, :updated, :export, :import]
+    before_filter :find_from_locale, :only => [:show, :all, :export, :import]
     before_filter :ensure_no_primary_locale, :only => [:all, :update, :show, :updated]
     before_filter :update_per_page, :only => [:all, :show, :updated]
 
@@ -14,7 +16,7 @@ module Tolk
       end
     end
   
-    def show      
+    def show
       respond_to do |format|
         format.html do
           @phrases = @locale.phrases_without_translation(params[:page])
@@ -22,6 +24,33 @@ module Tolk
         format.atom { @phrases = @locale.phrases_without_translation(params[:page], :per_page => 50) }
         format.yml { render :text => @locale.to_hash.ya2yaml(:syck_compatible => true) }
       end
+    end
+
+    def export
+      csv_string = CSV.generate(:col_sep => ";") do |csv|
+        csv << ["key", @from_locale.name, @locale.name]
+        Tolk::Phrase.find(:all, :select => "`id`, `key`").each do |phrase|
+          csv << [phrase.id, phrase.key, Tolk::Translation.find_by_phrase_id_and_locale_id(phrase.id, @from_locale.id).try(:text), Tolk::Translation.find_by_phrase_id_and_locale_id(phrase.id, @locale.id).try(:text)]
+        end
+      end
+
+      send_data csv_string, :type => "text/plain", :filename => "#{@from_locale.name}_to_#{@locale.name}.csv", :disposition => 'attachment'
+    end
+
+    def import
+      locale_translation_attributes = []
+
+      Tolk::Translation.transaction do
+        CSV.foreach(params[:csv_file].path, :col_sep => ";", :return_headers => false, :encoding => "UTF-8") do |row|
+          if !row[0].blank? && !row[3].blank?
+            translation = @locale.translations.find_or_create_by_phrase_id(row[0])
+            translation.text = row[3]
+            translation.save
+          end
+        end
+      end
+
+      redirect_to :back
     end
 
     def update
