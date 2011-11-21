@@ -163,7 +163,7 @@ module Tolk
         end
 
       phrases = Tolk::Phrase.scoped(:order => 'tolk_phrases.key ASC')
-      phrases = phrases.starting_with_text(key_query)
+      phrases = phrases.with_text(key_query)
       phrases = phrases.scoped(:conditions => ['tolk_phrases.id IN(?)', translations.map(&:phrase_id).uniq])
       phrases.paginate({:page => page}.merge(options))
     end

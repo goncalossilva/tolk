@@ -20,7 +20,11 @@ module Tolk
     attr_accessor :translation
 
     named_scope :starting_with_text, lambda { |query|
-      { :conditions => ["tolk_phrases.key LIKE ?", "#{query}.%"] }
+      { :conditions => ["tolk_phrases.key LIKE ?", "#{query}%"] }
+    }
+
+    named_scope :with_text, lambda { |query|
+      { :conditions => ["tolk_phrases.key LIKE ?", "%#{query}%"] }
     }
   end
 end
