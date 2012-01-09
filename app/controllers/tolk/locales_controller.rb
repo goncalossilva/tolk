@@ -3,7 +3,7 @@ require "csv"
 module Tolk
   class LocalesController < Tolk::ApplicationController
     before_filter :find_locale, :only => [:show, :all, :update, :updated, :export, :import]
-    before_filter :find_from_locale, :only => [:show, :all, :export, :import]
+    before_filter :find_from_locale, :only => [:show, :all, :export, :import, :updated]
     before_filter :ensure_no_primary_locale, :only => [:all, :update, :show, :updated]
     before_filter :update_per_page, :only => [:all, :show, :updated]
 
